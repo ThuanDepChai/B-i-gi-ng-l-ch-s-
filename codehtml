@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 4: Văn minh Ai Cập cổ đại – Lớp 10 Kết nối tri thức</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#c9a84c;
+  --gold-light:#f0d080;
+  --gold-dark:#8a6a1e;
+  --sand:#f5ead0;
+  --sand2:#ede0c0;
+  --brown:#5c3d1e;
+  --brown-dark:#3a2210;
+  --sky:#1a3a5c;
+  --sky2:#2a5f8f;
+  --nile:#1565c0;
+  --nile2:#0d47a1;
+  --green:#2d6a2d;
+  --red:#c0392b;
+  --white:#fff;
+  --text:#2c1810;
+  --muted:#6b4c30;
+  --radius:10px;
+  --shadow:0 4px 20px rgba(0,0,0,0.15);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#0d1b2a;color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ===== HEADER ===== */
+header{background:linear-gradient(135deg,#0a0a2e 0%,#1a1040 50%,#0d1b2a 100%);padding:0;position:relative;overflow:hidden;border-bottom:2px solid var(--gold)}
+.header-stars{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
+.star-dot{position:absolute;background:#fff;border-radius:50%;animation:twinkle 2s infinite alternate}
+@keyframes twinkle{0%{opacity:.2}100%{opacity:.9}}
+.header-inner{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2rem;flex-wrap:wrap;gap:1rem}
+.header-brand{display:flex;align-items:center;gap:1rem}
+.logo-pyramid{width:52px;height:44px}
+.brand-text .badge-sub{font-size:.65rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+.brand-text h1{font-family:'Cinzel',serif;font-size:1.25rem;color:#fff;font-weight:700;line-height:1.2}
+.brand-text .badge-lesson{font-size:.7rem;color:#fbbf24;margin-top:.15rem}
+.header-stats{display:flex;gap:.8rem;flex-wrap:wrap}
+.stat-chip{background:rgba(255,255,255,.08);border:1px solid rgba(201,168,76,.3);border-radius:20px;padding:.3rem .8rem;font-size:.72rem;color:var(--gold-light);display:flex;align-items:center;gap:.3rem}
+
+/* ===== NAV TABS ===== */
+.tab-nav{background:#12243a;border-bottom:1px solid rgba(201,168,76,.2);display:flex;overflow-x:auto;padding:0 1rem}
+.tab-nav::-webkit-scrollbar{height:3px}
+.tab-nav::-webkit-scrollbar-thumb{background:var(--gold)}
+.tab-btn{padding:.75rem 1.1rem;font-size:.8rem;font-weight:600;font-family:'Nunito',sans-serif;color:#94a3b8;border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;display:flex;align-items:center;gap:.4rem}
+.tab-btn:hover{color:var(--gold-light)}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* ===== MAIN ===== */
+main{padding:1.5rem;max-width:980px;margin:0 auto}
+.section{display:none}
+.section.active{display:block}
+
+/* ===== CARDS ===== */
+.card{background:linear-gradient(135deg,#f9f3e3,#f0e6c8);border-radius:14px;border:1px solid #d4a843;padding:1.4rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+.card-header{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
+.card-icon{font-size:1.6rem}
+.card-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--brown-dark);font-weight:700}
+.card-subtitle{font-size:.72rem;color:var(--muted);margin-top:.1rem}
+
+/* ===== KNOWLEDGE SECTION ===== */
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.know-card{background:linear-gradient(135deg,var(--sand),var(--sand2));border-radius:12px;border:1.5px solid var(--gold-dark);padding:1.2rem;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.know-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--gold))}
+.know-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.know-card h3{font-family:'Cinzel',serif;font-size:.9rem;color:var(--brown-dark);margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+.know-card p{font-size:.78rem;color:var(--brown);line-height:1.6}
+.know-tag{display:inline-block;background:var(--gold);color:var(--brown-dark);font-size:.62rem;font-weight:700;padding:.15rem .5rem;border-radius:10px;margin-bottom:.4rem}
+.expand-btn{margin-top:.6rem;font-size:.72rem;color:var(--nile2);font-weight:600;cursor:pointer;border:none;background:none;padding:0;font-family:'Nunito',sans-serif}
+.know-more{display:none;margin-top:.6rem;padding-top:.6rem;border-top:1px dashed var(--gold-dark);font-size:.75rem;color:var(--brown);line-height:1.7}
+.know-card.open .know-more{display:block}
+
+/* ===== TIMELINE ===== */
+.timeline-wrap{position:relative;padding-left:2rem}
+.timeline-wrap::before{content:'';position:absolute;left:.6rem;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--gold),var(--gold-dark))}
+.tl-entry{position:relative;margin-bottom:1.2rem}
+.tl-dot{position:absolute;left:-1.55rem;top:.3rem;width:22px;height:22px;border-radius:50%;border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:700;color:#fff}
+.tl-box{background:linear-gradient(135deg,var(--sand),var(--sand2));border-radius:10px;border:1px solid #c9a84c;padding:.9rem 1.1rem}
+.tl-era{font-size:.65rem;color:var(--muted);font-weight:600;letter-spacing:.05em;margin-bottom:.2rem}
+.tl-title{font-family:'Cinzel',serif;font-size:.88rem;color:var(--brown-dark);font-weight:700;margin-bottom:.3rem}
+.tl-desc{font-size:.75rem;color:var(--brown);line-height:1.6}
+.tl-highlight{display:inline-block;background:rgba(201,168,76,.2);border-radius:4px;padding:.1rem .4rem;font-size:.68rem;font-weight:700;color:var(--gold-dark);margin-top:.3rem;margin-right:.3rem}
+
+/* ===== MAP INFOGRAPHIC ===== */
+.map-section{background:linear-gradient(135deg,#e8f4e8,#d4ead4);border-radius:12px;border:1.5px solid #4a7c3f;padding:1.2rem}
+.map-legend{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem}
+.legend-item{display:flex;align-items:center;gap:.35rem;font-size:.72rem;color:var(--brown);font-weight:600}
+.legend-dot{width:12px;height:12px;border-radius:50%}
+
+/* ===== ACHIEVEMENTS ===== */
+.achieve-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.9rem}
+.achieve-item{background:linear-gradient(135deg,#1a0a2e,#2d1060);border-radius:12px;border:1px solid rgba(201,168,76,.35);padding:1.1rem;color:#fff;cursor:pointer;transition:all .25s;position:relative}
+.achieve-item:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.achieve-item.open{border-color:var(--gold);background:linear-gradient(135deg,#241050,#3d1a80)}
+.achieve-icon2{font-size:2rem;margin-bottom:.5rem}
+.achieve-name{font-family:'Cinzel',serif;font-size:.85rem;color:var(--gold);margin-bottom:.3rem}
+.achieve-brief{font-size:.73rem;color:#94a3b8;line-height:1.5}
+.achieve-full{display:none;margin-top:.6rem;padding-top:.6rem;border-top:1px solid rgba(255,255,255,.1);font-size:.72rem;color:#c4b5d4;line-height:1.7}
+.achieve-item.open .achieve-full{display:block}
+.achieve-item.open .achieve-brief{display:none}
+
+/* ===== QUIZ ===== */
+.quiz-wrap{max-width:640px;margin:0 auto}
+.quiz-progress-bar{height:6px;background:rgba(255,255,255,.1);border-radius:3px;margin-bottom:1.2rem}
+.quiz-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),#f0d080);border-radius:3px;transition:width .4s}
+.quiz-meta{display:flex;justify-content:space-between;font-size:.72rem;color:#94a3b8;margin-bottom:.6rem}
+.quiz-card{background:linear-gradient(135deg,#f9f3e3,#ede0c0);border-radius:14px;border:1.5px solid var(--gold-dark);padding:1.5rem}
+.quiz-q-num{font-size:.68rem;color:var(--muted);font-weight:700;letter-spacing:.08em;margin-bottom:.4rem}
+.quiz-question{font-size:.95rem;color:var(--brown-dark);font-weight:700;line-height:1.6;margin-bottom:1.1rem}
+.quiz-opts{display:flex;flex-direction:column;gap:.55rem}
+.quiz-opt{background:rgba(255,255,255,.7);border:1.5px solid #c9a84c;border-radius:8px;padding:.65rem 1rem;font-size:.82rem;color:var(--brown-dark);cursor:pointer;text-align:left;font-family:'Nunito',sans-serif;transition:all .2s;font-weight:500}
+.quiz-opt:hover:not(:disabled){background:#fff4cc;border-color:var(--gold)}
+.quiz-opt.correct{background:#d4f8d4;border-color:#22c55e;color:#14532d;font-weight:700}
+.quiz-opt.wrong{background:#fde8e8;border-color:#ef4444;color:#7f1d1d}
+.quiz-opt:disabled{cursor:default}
+.quiz-explain{margin-top:.8rem;padding:.7rem 1rem;background:rgba(201,168,76,.12);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:.78rem;color:var(--brown);line-height:1.6;display:none}
+.quiz-explain.show{display:block}
+.quiz-actions{display:flex;gap:.6rem;margin-top:1rem;justify-content:space-between;align-items:center}
+.btn{padding:.55rem 1.2rem;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;border:none;font-family:'Nunito',sans-serif;transition:all .2s}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--brown-dark)}
+.btn-gold:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-outline{background:transparent;border:1.5px solid var(--gold);color:var(--gold)}
+.btn-outline:hover{background:rgba(201,168,76,.1)}
+.btn-sky{background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff}
+.score-summary{text-align:center;padding:1.5rem}
+.score-circle{width:90px;height:90px;border-radius:50%;border:4px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1rem;background:linear-gradient(135deg,var(--sand),var(--sand2))}
+.score-num{font-family:'Cinzel',serif;font-size:1.5rem;color:var(--brown-dark);font-weight:700}
+.score-tot{font-size:.65rem;color:var(--muted)}
+.score-msg{font-size:.9rem;color:var(--brown-dark);font-weight:700;margin-bottom:.4rem}
+.score-sub{font-size:.75rem;color:var(--muted);line-height:1.6}
+
+/* ===== FLASHCARDS ===== */
+.flashcard-wrap{display:flex;flex-direction:column;align-items:center;gap:1rem}
+.fc-counter{font-size:.75rem;color:#94a3b8}
+.flashcard{width:100%;max-width:520px;height:220px;perspective:1000px;cursor:pointer}
+.fc-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.flashcard.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem;text-align:center}
+.fc-front{background:linear-gradient(135deg,#1a0a2e,#2d1060);border:2px solid var(--gold)}
+.fc-back{background:linear-gradient(135deg,var(--sand),#ede0c0);border:2px solid var(--gold-dark);transform:rotateY(180deg)}
+.fc-label{font-size:.65rem;letter-spacing:.12em;font-weight:700;margin-bottom:.6rem}
+.fc-front .fc-label{color:var(--gold)}
+.fc-back .fc-label{color:var(--muted)}
+.fc-content{font-size:.95rem;font-weight:700;line-height:1.6}
+.fc-front .fc-content{color:#e2e8f0}
+.fc-back .fc-content{color:var(--brown-dark)}
+.fc-hint{font-size:.68rem;margin-top:.5rem}
+.fc-front .fc-hint{color:rgba(201,168,76,.6)}
+.fc-back .fc-hint{color:var(--muted)}
+.fc-nav{display:flex;gap:.7rem;align-items:center}
+.fc-progress-dots{display:flex;gap:.3rem;flex-wrap:wrap;justify-content:center;max-width:400px}
+.fc-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .2s}
+.fc-dot.done{background:var(--gold)}
+.fc-dot.current{background:var(--gold-light);box-shadow:0 0 6px var(--gold)}
+
+/* ===== MATCHING GAME ===== */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.match-col h4{font-size:.75rem;font-weight:700;color:var(--gold);letter-spacing:.08em;margin-bottom:.6rem;text-align:center}
+.match-items{display:flex;flex-direction:column;gap:.45rem}
+.match-item{padding:.6rem .9rem;border-radius:8px;font-size:.78rem;font-weight:600;cursor:pointer;border:1.5px solid;transition:all .2s;user-select:none}
+.match-left{background:rgba(21,101,192,.15);border-color:rgba(21,101,192,.5);color:#e2e8f0}
+.match-right{background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.4);color:var(--brown-dark);background-color:#f5ead0}
+.match-item.selected{border-width:2.5px}
+.match-left.selected{border-color:#60a5fa;background:rgba(96,165,250,.2);color:#93c5fd}
+.match-right.selected{border-color:var(--gold);background:rgba(201,168,76,.25);color:var(--brown-dark)}
+.match-item.matched{border-color:#22c55e;background:rgba(34,197,94,.15);color:#86efac;cursor:default}
+.match-right.matched{background:#d4f8d4;color:#14532d;border-color:#22c55e}
+.match-item.wrong-flash{animation:wrongFlash .4s}
+@keyframes wrongFlash{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.match-score{text-align:center;margin-top:.8rem;font-size:.8rem;color:var(--gold);font-weight:700}
+
+/* ===== FILL BLANK ===== */
+.fill-card{background:linear-gradient(135deg,var(--sand),var(--sand2));border-radius:12px;border:1.5px solid var(--gold-dark);padding:1.3rem;margin-bottom:.9rem}
+.fill-text{font-size:.88rem;color:var(--brown-dark);line-height:2;font-weight:500}
+.fill-input{border:none;border-bottom:2px solid var(--gold-dark);background:transparent;font-size:.88rem;font-family:'Nunito',sans-serif;color:var(--brown-dark);font-weight:700;width:120px;text-align:center;outline:none;padding:.1rem .3rem}
+.fill-input:focus{border-bottom-color:var(--nile2)}
+.fill-input.correct{border-bottom-color:#22c55e;color:#14532d;background:rgba(34,197,94,.08)}
+.fill-input.wrong{border-bottom-color:#ef4444;color:#7f1d1d}
+.fill-hint{display:none;font-size:.7rem;color:#7f1d1d;margin-top:.25rem}
+.fill-hint.show{display:block}
+.fill-hint.ok{color:#14532d;display:block}
+
+/* ===== NOTES ===== */
+.notes-wrap{max-width:640px}
+.notes-section{margin-bottom:1.2rem}
+.notes-title{font-family:'Cinzel',serif;font-size:.9rem;color:var(--gold-light);font-weight:700;border-bottom:1px solid rgba(201,168,76,.3);padding-bottom:.4rem;margin-bottom:.7rem}
+.def-table{width:100%;border-collapse:collapse}
+.def-table th{background:rgba(201,168,76,.15);color:var(--gold);font-size:.72rem;letter-spacing:.06em;padding:.5rem .8rem;text-align:left;border-bottom:1px solid rgba(201,168,76,.2)}
+.def-table td{padding:.5rem .8rem;font-size:.78rem;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:top;line-height:1.6}
+.def-table tr:last-child td{border-bottom:none}
+.def-table td:first-child{color:var(--gold-light);font-weight:700;white-space:nowrap}
+.key-point{background:rgba(201,168,76,.08);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:.7rem 1rem;margin-bottom:.6rem;font-size:.8rem;color:#e2e8f0;line-height:1.7}
+.key-point strong{color:var(--gold-light)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){
+  .header-inner{padding:.9rem 1rem}
+  .brand-text h1{font-size:1rem}
+  main{padding:1rem .75rem}
+  .match-grid{grid-template-columns:1fr}
+  .achieve-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ===== SCROLL ===== */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:rgba(0,0,0,.2)}
+::-webkit-scrollbar-thumb{background:var(--gold-dark);border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-stars" id="hStars"></div>
+  <div class="header-inner">
+    <div class="header-brand">
+      <svg class="logo-pyramid" viewBox="0 0 52 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="26,2 50,42 2,42" fill="#c9a84c" opacity=".9"/>
+        <polygon points="26,2 50,42 26,42" fill="#8a6a1e" opacity=".7"/>
+        <circle cx="26" cy="18" r="4" fill="#f0d080" opacity=".8"/>
+        <line x1="10" y1="42" x2="42" y2="42" stroke="#f0d080" stroke-width="2"/>
+      </svg>
+      <div class="brand-text">
+        <div class="badge-sub">Lịch sử lớp 10 · Kết nối tri thức 2018</div>
+        <h1>Bài 4: Văn minh Ai Cập cổ đại</h1>
+        <div class="badge-lesson">🏺 Website luyện tập & tự học · Chương 3: Văn minh Đông cổ đại</div>
+      </div>
+    </div>
+    <div class="header-stats">
+      <div class="stat-chip">📚 6 chủ đề học</div>
+      <div class="stat-chip">❓ 20 câu hỏi</div>
+      <div class="stat-chip">🃏 12 flashcard</div>
+      <div class="stat-chip">⏱️ ~45 phút</div>
+    </div>
+  </div>
+</header>
+
+<!-- TAB NAV -->
+<nav class="tab-nav" id="tabNav">
+  <button class="tab-btn active" onclick="switchTab('knowledge')">📖 Kiến thức</button>
+  <button class="tab-btn" onclick="switchTab('timeline')">📅 Niên đại</button>
+  <button class="tab-btn" onclick="switchTab('achievements')">🏛️ Thành tựu</button>
+  <button class="tab-btn" onclick="switchTab('quiz')">🎯 Trắc nghiệm</button>
+  <button class="tab-btn" onclick="switchTab('flashcard')">🃏 Flashcard</button>
+  <button class="tab-btn" onclick="switchTab('matching')">🔗 Nối cột</button>
+  <button class="tab-btn" onclick="switchTab('fillblank')">✏️ Điền từ</button>
+  <button class="tab-btn" onclick="switchTab('notes')">📝 Ghi nhớ</button>
+</nav>
+
+<main>
+
+<!-- ===== KNOWLEDGE ===== -->
+<div class="section active" id="sec-knowledge">
+  <div class="card">
+    <div class="card-header">
+      <span class="card-icon">📖</span>
+      <div>
+        <div class="card-title">Nội dung bài học tóm tắt</div>
+        <div class="card-subtitle">Nhấn vào mỗi thẻ để xem chi tiết — Bấm "Đọc thêm" để mở rộng</div>
+      </div>
+    </div>
+  </div>
+  <div class="knowledge-grid">
+    <div class="know-card" id="kc1">
+      <span class="know-tag">1. Điều kiện tự nhiên</span>
+      <h3>🌍 Vị trí địa lý</h3>
+      <p>Ai Cập nằm ở đông bắc châu Phi, trải dọc theo hạ lưu sông Nile. Phía bắc giáp Địa Trung Hải, đông giáp Biển Đỏ, tây và nam giáp sa mạc.</p>
+      <button class="expand-btn" onclick="toggleKnow('kc1')">▶ Đọc thêm</button>
+      <div class="know-more">
+        <strong>Sông Nile:</strong> Dài 6.650 km, lũ định kỳ tháng 6–10 để lại lớp phù sa màu mỡ màu đen (người Ai Cập gọi là "Kemet" – đất đen), trái với sa mạc "Deshret" – đất đỏ.<br><br>
+        <strong>Vai trò sông Nile:</strong> Nguồn cung cấp nước, phù sa và đường giao thông chính → Nhà thơ Hy Lạp Herodotus gọi Ai Cập là "Món quà của sông Nile".<br><br>
+        <strong>Sa mạc:</strong> Sahara (tây) và Arabia (đông) tạo thành hàng rào tự nhiên bảo vệ, ngăn ngoại xâm.
+      </div>
+    </div>
+    <div class="know-card" id="kc2">
+      <span class="know-tag">2. Tổ chức nhà nước</span>
+      <h3>👑 Chế độ Pharaoh</h3>
+      <p>Ai Cập là nhà nước quân chủ chuyên chế, đứng đầu là Pharaoh — người vừa là vua, vừa là thần (con của thần Ra).</p>
+      <button class="expand-btn" onclick="toggleKnow('kc2')">▶ Đọc thêm</button>
+      <div class="know-more">
+        <strong>Pharaoh:</strong> Quyền lực tuyệt đối — nắm cả quyền chính trị, quân sự, tôn giáo và kinh tế. Được coi là thần sống, đại diện của thần Ra trên trần gian.<br><br>
+        <strong>Bộ máy quan lại:</strong> Tể tướng (Vizier) giúp Pharaoh trị nước. Bên dưới là các tư tế, quan liêu, quân đội và thư lại.<br><br>
+        <strong>Phân tầng xã hội:</strong> Pharaoh → Tư tế & quý tộc → Thư lại → Binh lính → Thương nhân, thợ thủ công → Nông dân → Nô lệ.
+      </div>
+    </div>
+    <div class="know-card" id="kc3">
+      <span class="know-tag">3. Kinh tế</span>
+      <h3>🌾 Nông nghiệp & thương mại</h3>
+      <p>Nền kinh tế chủ yếu là nông nghiệp nhờ phù sa sông Nile. Các loại cây trồng chính: lúa mì, lúa mạch, lanh, nho, chà là.</p>
+      <button class="expand-btn" onclick="toggleKnow('kc3')">▶ Đọc thêm</button>
+      <div class="know-more">
+        <strong>Nông nghiệp:</strong> Hệ thống kênh đào, đê điều và guồng nước phát triển. Nhà nước quản lý thủy lợi và thu tô thuế bằng hiện vật.<br><br>
+        <strong>Thủ công nghiệp:</strong> Đồ gốm, thủy tinh, vải lanh, đồ trang sức vàng, chế tác đá quý nổi tiếng.<br><br>
+        <strong>Thương mại:</strong> Giao thương với Lưỡng Hà, Nubia, Canaan. Xuất khẩu lúa mì, giấy papyrus, vải lanh; nhập khẩu gỗ, đồng, bạc.
+      </div>
+    </div>
+    <div class="know-card" id="kc4">
+      <span class="know-tag">4. Chữ viết</span>
+      <h3>𓂀 Hieroglyphics</h3>
+      <p>Chữ tượng hình (Hieroglyphics) ra đời khoảng 3100 TCN với hơn 700 ký tự, viết trên đá, gỗ và giấy papyrus.</p>
+      <button class="expand-btn" onclick="toggleKnow('kc4')">▶ Đọc thêm</button>
+      <div class="know-more">
+        <strong>3 loại chữ viết:</strong><br>
+        • Hieroglyphics (tượng hình): dùng trong các văn bản tôn giáo, đền đài<br>
+        • Hieratic (thánh thư): dạng chữ thảo, dùng hành chính và văn học<br>
+        • Demotic (bình dân): chữ đơn giản cho đời thường<br><br>
+        <strong>Rosetta Stone (1799):</strong> Phiến đá ghi 3 thứ chữ cùng nội dung → Jean-François Champollion giải mã năm 1822.<br><br>
+        <strong>Papyrus:</strong> Làm từ thực vật sậy, nhẹ hơn đá → tổ tiên của giấy hiện đại.
+      </div>
+    </div>
+    <div class="know-card" id="kc5">
+      <span class="know-tag">5. Khoa học</span>
+      <h3>📐 Toán học & thiên văn</h3>
+      <p>Người Ai Cập phát minh hệ đếm cơ số 10, biết tính diện tích và thể tích, tính được số π ≈ 3,16.</p>
+      <button class="expand-btn" onclick="toggleKnow('kc5')">▶ Đọc thêm</button>
+      <div class="know-more">
+        <strong>Toán học:</strong> Biết tính phân số, diện tích hình tròn, thể tích hình chóp. Bài toán Rhind Papyrus (1650 TCN) chứa 87 bài toán.<br><br>
+        <strong>Thiên văn học:</strong> Lịch 365 ngày (từ 4236 TCN) — một trong những lịch đầu tiên của nhân loại. Chia năm thành 12 tháng × 30 ngày + 5 ngày lễ.<br><br>
+        <strong>Y học:</strong> Phẫu thuật, nha khoa, điều trị vết thương. Hiểu giải phẫu qua tục ướp xác. Edwin Smith Papyrus (3000 TCN) — sách y học cổ nhất thế giới.
+      </div>
+    </div>
+    <div class="know-card" id="kc6">
+      <span class="know-tag">6. Tín ngưỡng</span>
+      <h3>🛕 Đa thần giáo</h3>
+      <p>Người Ai Cập thờ hơn 2.000 vị thần. Ra (thần mặt trời) là tối cao nhất, Osiris cai quản cõi chết, Isis là thần bảo hộ gia đình.</p>
+      <button class="expand-btn" onclick="toggleKnow('kc6')">▶ Đọc thêm</button>
+      <div class="know-more">
+        <strong>Các thần chính:</strong> Ra/Amun-Ra (mặt trời), Osiris (chết & phục sinh), Isis (phép thuật), Horus (bầu trời), Anubis (ướp xác), Thoth (trí tuệ).<br><br>
+        <strong>Tục ướp xác (mummification):</strong> Tin vào sự sống sau cái chết — linh hồn "Ka" cần thể xác nguyên vẹn để hồi sinh. Quá trình ướp xác kéo dài 70 ngày.<br><br>
+        <strong>Sách Người Chết (Book of the Dead):</strong> Hướng dẫn linh hồn vượt qua thế giới bên kia và vào cõi vĩnh hằng.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TIMELINE ===== -->
+<div class="section" id="sec-timeline">
+  <div class="card">
+    <div class="card-header">
+      <span class="card-icon">📅</span>
+      <div>
+        <div class="card-title">Các thời kỳ lịch sử chính</div>
+        <div class="card-subtitle">Niên đại quan trọng trong 3.000 năm văn minh Ai Cập</div>
+      </div>
+    </div>
+  </div>
+  <div class="timeline-wrap">
+    <div class="tl-entry">
+      <div class="tl-dot" style="background:#1565c0">I</div>
+      <div class="tl-box">
+        <div class="tl-era">~ 3500 – 3100 TCN</div>
+        <div class="tl-title">⚡ Thời kỳ tiền triều đại</div>
+        <div class="tl-desc">Các cộng đồng định cư dọc sông Nile. Hình thành 2 vương quốc: Thượng Ai Cập (miền nam, màu trắng) và Hạ Ai Cập (đồng bằng sông Nile, màu đỏ).</div>
+        <span class="tl-highlight">Xuất hiện chữ viết đầu tiên</span>
+        <span class="tl-highlight">Đồ gốm, đồ đồng</span>
+      </div>
+    </div>
+    <div class="tl-entry">
+      <div class="tl-dot" style="background:#7c3aed">II</div>
+      <div class="tl-box">
+        <div class="tl-era">~ 3100 TCN</div>
+        <div class="tl-title">🏛️ Thống nhất đất nước — Vương triều I</div>
+        <div class="tl-desc">Pharaoh Narmer (Menes) thống nhất Thượng và Hạ Ai Cập, đặt thủ đô tại Memphis. Mở đầu thời kỳ văn minh Ai Cập thống nhất kéo dài ~3.000 năm.</div>
+        <span class="tl-highlight">Pharaoh đầu tiên</span>
+        <span class="tl-highlight">Thủ đô Memphis</span>
+        <span class="tl-highlight">Vương miện đôi</span>
+      </div>
+    </div>
+    <div class="tl-entry">
+      <div class="tl-dot" style="background:#d97706">III</div>
+      <div class="tl-box">
+        <div class="tl-era">~ 2686 – 2181 TCN</div>
+        <div class="tl-title">🔺 Vương quốc Cổ đại (Old Kingdom)</div>
+        <div class="tl-desc">Thời đại hoàng kim của các Pharaoh. Xây dựng các kim tự tháp vĩ đại tại Giza. Kinh tế phát triển mạnh, quyền lực Pharaoh tuyệt đối.</div>
+        <span class="tl-highlight">Kim tự tháp Giza (2560 TCN)</span>
+        <span class="tl-highlight">Tượng Nhân Sư</span>
+        <span class="tl-highlight">Pharaoh Khufu, Khafre</span>
+      </div>
+    </div>
+    <div class="tl-entry">
+      <div class="tl-dot" style="background:#059669">IV</div>
+      <div class="tl-box">
+        <div class="tl-era">~ 2055 – 1650 TCN</div>
+        <div class="tl-title">☀️ Vương quốc Trung đại (Middle Kingdom)</div>
+        <div class="tl-desc">Thời kỳ phục hưng sau giai đoạn phân liệt. Mở rộng lãnh thổ sang Nubia (nam), phát triển thương mại với Canaan và Punt. Nghệ thuật và văn học nở rộ.</div>
+        <span class="tl-highlight">Thủ đô Thebes</span>
+        <span class="tl-highlight">Mở rộng Nubia</span>
+        <span class="tl-highlight">Thương mại phát triển</span>
+      </div>
+    </div>
+    <div class="tl-entry">
+      <div class="tl-dot" style="background:#be123c">V</div>
+      <div class="tl-box">
+        <div class="tl-era">~ 1550 – 1070 TCN</div>
+        <div class="tl-title">⚔️ Vương quốc Mới (New Kingdom)</div>
+        <div class="tl-desc">Đỉnh cao của đế chế Ai Cập. Lãnh thổ mở rộng đến tận Syria, Nubia. Xây dựng đền Abu Simbel, đền Karnak hoành tráng. Pharaoh Ramesses II trị vì 67 năm.</div>
+        <span class="tl-highlight">Ramesses II (1279–1213 TCN)</span>
+        <span class="tl-highlight">Đền Abu Simbel</span>
+        <span class="tl-highlight">Tutankhamun</span>
+      </div>
+    </div>
+    <div class="tl-entry">
+      <div class="tl-dot" style="background:#475569">VI</div>
+      <div class="tl-box">
+        <div class="tl-era">~ 1070 TCN – 332 TCN</div>
+        <div class="tl-title">🌅 Thời kỳ suy tàn</div>
+        <div class="tl-desc">Liên tiếp bị xâm lược bởi người Libya, Nubia, Assyria, Ba Tư. Quyền lực phân tán, nội chiến thường xuyên. Năm 525 TCN người Ba Tư chinh phục Ai Cập.</div>
+        <span class="tl-highlight">Bị Ba Tư chinh phục 525 TCN</span>
+      </div>
+    </div>
+    <div class="tl-entry">
+      <div class="tl-dot" style="background:#0891b2">VII</div>
+      <div class="tl-box">
+        <div class="tl-era">332 TCN – 30 TCN</div>
+        <div class="tl-title">🏺 Thời kỳ Hy Lạp hóa</div>
+        <div class="tl-desc">Alexander Đại đế chinh phục Ai Cập năm 332 TCN, thành lập thành phố Alexandria. Vương triều Ptolemy cai trị, pha trộn văn hóa Hy Lạp – Ai Cập. Nữ hoàng Cleopatra VII là pharaoh cuối cùng.</div>
+        <span class="tl-highlight">Alexandria – trung tâm học thuật</span>
+        <span class="tl-highlight">Cleopatra VII (51–30 TCN)</span>
+      </div>
+    </div>
+    <div class="tl-entry">
+      <div class="tl-dot" style="background:#9f1239">VIII</div>
+      <div class="tl-box">
+        <div class="tl-era">30 TCN – thế kỷ IV</div>
+        <div class="tl-title">🦅 Thời kỳ La Mã</div>
+        <div class="tl-desc">Octavian (Augustus) sáp nhập Ai Cập vào Đế chế La Mã năm 30 TCN. Văn minh Ai Cập cổ đại dần chấm dứt. Kitô giáo thay thế đa thần giáo trong thế kỷ IV.</div>
+        <span class="tl-highlight">Kết thúc 3.000 năm văn minh</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ACHIEVEMENTS ===== -->
+<div class="section" id="sec-achievements">
+  <div class="card" style="background:linear-gradient(135deg,#1a0a2e,#2d1060);border-color:rgba(201,168,76,.4)">
+    <div class="card-header">
+      <span class="card-icon">🏛️</span>
+      <div>
+        <div class="card-title" style="color:var(--gold)">Thành tựu văn minh tiêu biểu</div>
+        <div class="card-subtitle" style="color:#94a3b8">Nhấn vào từng thẻ để xem chi tiết đầy đủ</div>
+      </div>
+    </div>
+  </div>
+  <div class="achieve-grid">
+    <div class="achieve-item" onclick="this.classList.toggle('open')">
+      <div class="achieve-icon2">🔺</div>
+      <div class="achieve-name">Kiến trúc – Kim tự tháp</div>
+      <div class="achieve-brief">Công trình đá khổng lồ, kỳ quan thế giới cổ đại, biểu tượng của quyền năng Pharaoh</div>
+      <div class="achieve-full">
+        <strong style="color:var(--gold-light)">Kim tự tháp Khufu (Kheops):</strong> cao 146,5m, đáy 230m × 230m, dùng ~2,3 triệu khối đá nặng 2,5–80 tấn/khối. Xây khoảng 2560 TCN.<br><br>
+        <strong style="color:var(--gold-light)">Tượng Nhân Sư (Sphinx):</strong> cao 20m, dài 73m, khắc từ khối đá nguyên vẹn, mặt người mình sư tử.<br><br>
+        <strong style="color:var(--gold-light)">Đền Karnak:</strong> phức hợp đền thờ lớn nhất thế giới (1,5 km²), xây qua ~2.000 năm bởi nhiều Pharaoh.<br><br>
+        <strong style="color:var(--gold-light)">Đền Abu Simbel:</strong> Ramesses II cho xây khắc vào núi đá, 4 tượng pharaoh cao 20m, ánh sáng rọi thẳng vào tượng 2 lần/năm.
+      </div>
+    </div>
+    <div class="achieve-item" onclick="this.classList.toggle('open')">
+      <div class="achieve-icon2">𓂀</div>
+      <div class="achieve-name">Chữ viết – Hieroglyphics</div>
+      <div class="achieve-brief">Hệ thống chữ tượng hình đầu tiên, xuất hiện từ 3100 TCN với hơn 700 ký tự</div>
+      <div class="achieve-full">
+        <strong style="color:var(--gold-light)">Hieroglyphics:</strong> Gồm 3 loại ký tự: biểu ý (logogram), biểu âm (phonogram), và tự bổ nghĩa. Dùng trên đền, lăng mộ và vật thiêng.<br><br>
+        <strong style="color:var(--gold-light)">Papyrus:</strong> Làm từ cây sậy (Cyperus papyrus) mọc ven sông Nile. Nhẹ, bền, dễ cuộn — cách mạng trong lưu giữ thông tin.<br><br>
+        <strong style="color:var(--gold-light)">Phiến đá Rosetta (1799):</strong> Phát hiện tại thành phố Rosetta, ghi cùng 1 nội dung bằng 3 loại chữ (Hieroglyphics, Demotic, Hy Lạp) → Champollion giải mã 1822.
+      </div>
+    </div>
+    <div class="achieve-item" onclick="this.classList.toggle('open')">
+      <div class="achieve-icon2">📐</div>
+      <div class="achieve-name">Toán học</div>
+      <div class="achieve-brief">Biết tính π ≈ 3,16, diện tích hình tròn, thể tích hình chóp, phát minh hệ đếm cơ số 10</div>
+      <div class="achieve-full">
+        <strong style="color:var(--gold-light)">Hệ đếm:</strong> Cơ số 10, có ký hiệu riêng cho 1, 10, 100, 1000, 10000, 100000, 1000000.<br><br>
+        <strong style="color:var(--gold-light)">Ahmes Papyrus (Rhind Papyrus):</strong> ~1650 TCN, chứa 87 bài toán về số học, đại số, hình học. Tính được π = 256/81 ≈ 3,16.<br><br>
+        <strong style="color:var(--gold-light)">Moscow Mathematical Papyrus:</strong> Tính thể tích hình chóp cụt — kiến thức cần thiết để xây kim tự tháp.
+      </div>
+    </div>
+    <div class="achieve-item" onclick="this.classList.toggle('open')">
+      <div class="achieve-icon2">🌙</div>
+      <div class="achieve-name">Thiên văn & Lịch</div>
+      <div class="achieve-brief">Lịch 365 ngày từ 4236 TCN — một trong những lịch pháp đầu tiên và chính xác nhất cổ đại</div>
+      <div class="achieve-full">
+        <strong style="color:var(--gold-light)">Lịch Ai Cập:</strong> 365 ngày = 12 tháng × 30 ngày + 5 ngày lễ. Ra đời 4236 TCN — sớm hơn lịch La Mã hàng nghìn năm.<br><br>
+        <strong style="color:var(--gold-light)">Quan sát thiên văn:</strong> Biết vị trí Sao Thiên Lang (Sirius) — khi sao mọc cùng mặt trời báo hiệu mùa lũ sông Nile sắp đến.<br><br>
+        <strong style="color:var(--gold-light)">Đồng hồ nước (Clepsydra):</strong> Đo thời gian ban đêm bằng lượng nước chảy. Đồng hồ mặt trời (sundial) cho ban ngày.
+      </div>
+    </div>
+    <div class="achieve-item" onclick="this.classList.toggle('open')">
+      <div class="achieve-icon2">⚕️</div>
+      <div class="achieve-name">Y học</div>
+      <div class="achieve-brief">Phẫu thuật, nha khoa, điều trị vết thương — tiên phong y học nhờ tục ướp xác</div>
+      <div class="achieve-full">
+        <strong style="color:var(--gold-light)">Edwin Smith Papyrus (~3000 TCN):</strong> Sách giải phẫu và phẫu thuật cổ nhất thế giới, mô tả 48 trường hợp chấn thương và phương pháp điều trị.<br><br>
+        <strong style="color:var(--gold-light)">Ebers Papyrus (~1550 TCN):</strong> 700 bài thuốc và phương pháp điều trị, bao gồm bệnh tim, tiểu đường, tâm thần.<br><br>
+        <strong style="color:var(--gold-light)">Ướp xác:</strong> Qua quá trình ướp xác, người Ai Cập hiểu cơ thể người — các cơ quan được lấy ra, bảo quản trong bình Canopic riêng biệt.
+      </div>
+    </div>
+    <div class="achieve-item" onclick="this.classList.toggle('open')">
+      <div class="achieve-icon2">🎨</div>
+      <div class="achieve-name">Nghệ thuật</div>
+      <div class="achieve-brief">Hội họa, điêu khắc đặc sắc với quy tắc phối cảnh riêng biệt — tỷ lệ phản ánh tầm quan trọng</div>
+      <div class="achieve-full">
+        <strong style="color:var(--gold-light)">Hội họa:</strong> Vẽ mặt người nghiêng, mắt nhìn thẳng, vai nhìn thẳng, chân nghiêng. Màu có ý nghĩa: vàng = thần thánh, xanh lá = phồn thịnh, đỏ = đàn ông.<br><br>
+        <strong style="color:var(--gold-light)">Điêu khắc:</strong> Tượng Pharaoh ngồi thẳng, uy nghiêm. Tỷ lệ cơ thể theo quy tắc "canon" — 18 ô lưới tiêu chuẩn.<br><br>
+        <strong style="color:var(--gold-light)">Thủ công:</strong> Đồ trang sức vàng bạc, đá quý tinh xảo. Bộ trang sức mặt nạ vàng Tutankhamun nặng 11 kg, điêu khắc hoàn hảo.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== QUIZ ===== -->
+<div class="section" id="sec-quiz">
+  <div class="quiz-wrap">
+    <div id="quizArea">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qProg" style="width:5%"></div></div>
+      <div class="quiz-meta">
+        <span id="qLabel">Câu 1 / 20</span>
+        <span>Điểm: <strong id="qScore">0</strong></span>
+      </div>
+      <div class="quiz-card">
+        <div class="quiz-q-num" id="qNum">CÂU HỎI 1</div>
+        <div class="quiz-question" id="qText"></div>
+        <div class="quiz-opts" id="qOpts"></div>
+        <div class="quiz-explain" id="qExp"></div>
+      </div>
+      <div class="quiz-actions">
+        <span id="qResultBadge" style="font-size:.8rem;font-weight:700"></span>
+        <button class="btn btn-gold" id="qNextBtn" onclick="nextQ()" style="display:none">Câu tiếp theo →</button>
+      </div>
+    </div>
+    <div id="quizEnd" style="display:none">
+      <div class="quiz-card score-summary">
+        <div class="score-circle">
+          <div class="score-num" id="finalScore">0</div>
+          <div class="score-tot" id="finalTot">/20</div>
+        </div>
+        <div class="score-msg" id="scoreMsg"></div>
+        <div class="score-sub" id="scoreSub"></div>
+        <div style="margin-top:1rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-gold" onclick="startQuiz()">🔄 Làm lại</button>
+          <button class="btn btn-sky" onclick="switchTab('flashcard')">🃏 Ôn flashcard</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FLASHCARD ===== -->
+<div class="section" id="sec-flashcard">
+  <div class="flashcard-wrap">
+    <div class="fc-counter" id="fcCounter">Thẻ 1 / 12 · Nhấn thẻ để lật</div>
+    <div class="flashcard" id="theCard" onclick="flipCard()">
+      <div class="fc-inner" id="fcInner">
+        <div class="fc-front">
+          <div class="fc-label">❓ CÂU HỎI</div>
+          <div class="fc-content" id="fcFront"></div>
+          <div class="fc-hint">Nhấn để xem đáp án</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">✅ ĐÁP ÁN</div>
+          <div class="fc-content" id="fcBack" style="font-size:.85rem"></div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-progress-dots" id="fcDots"></div>
+    <div class="fc-nav">
+      <button class="btn btn-outline" onclick="prevCard()">← Trước</button>
+      <button class="btn btn-gold" onclick="nextCard()">Tiếp →</button>
+    </div>
+    <div style="font-size:.72rem;color:#64748b;text-align:center">Hoàn thành tất cả thẻ để ghi nhớ kiến thức!</div>
+  </div>
+</div>
+
+<!-- ===== MATCHING ===== -->
+<div class="section" id="sec-matching">
+  <div class="card">
+    <div class="card-header">
+      <span class="card-icon">🔗</span>
+      <div>
+        <div class="card-title">Bài tập nối cột</div>
+        <div class="card-subtitle">Nhấn 1 mục cột A, rồi nhấn 1 mục cột B để nối — Tìm 8 cặp đúng!</div>
+      </div>
+    </div>
+  </div>
+  <div class="match-grid">
+    <div>
+      <h4>CỘT A — KHÁI NIỆM</h4>
+      <div class="match-items" id="matchLeft"></div>
+    </div>
+    <div>
+      <h4>CỘT B — GIẢI THÍCH</h4>
+      <div class="match-items" id="matchRight"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore"></div>
+  <div style="text-align:center;margin-top:.8rem">
+    <button class="btn btn-outline" onclick="initMatch()">🔄 Xáo lại</button>
+  </div>
+</div>
+
+<!-- ===== FILL BLANK ===== -->
+<div class="section" id="sec-fillblank">
+  <div class="card">
+    <div class="card-header">
+      <span class="card-icon">✏️</span>
+      <div>
+        <div class="card-title">Điền từ còn thiếu</div>
+        <div class="card-subtitle">Gõ từ thích hợp vào ô trống — Nhấn Enter hoặc nút kiểm tra</div>
+      </div>
+    </div>
+  </div>
+  <div id="fillCards"></div>
+  <div style="display:flex;gap:.7rem;margin-top:1rem">
+    <button class="btn btn-gold" onclick="checkFill()">✅ Kiểm tra đáp án</button>
+    <button class="btn btn-outline" onclick="resetFill()">🔄 Làm lại</button>
+  </div>
+  <div id="fillResult" style="margin-top:.8rem;font-size:.82rem;font-weight:700;color:var(--gold)"></div>
+</div>
+
+<!-- ===== NOTES ===== -->
+<div class="section" id="sec-notes">
+  <div class="notes-wrap" style="max-width:700px">
+    <div class="notes-section">
+      <div class="notes-title">📌 Các mốc niên đại cần nhớ</div>
+      <div class="key-point">• <strong>4236 TCN</strong> — Lịch Ai Cập 365 ngày ra đời (lịch đầu tiên của nhân loại)</div>
+      <div class="key-point">• <strong>~3100 TCN</strong> — Chữ Hieroglyphics xuất hiện + Pharaoh Narmer thống nhất đất nước</div>
+      <div class="key-point">• <strong>2686–2181 TCN</strong> — Vương quốc Cổ đại: xây Kim tự tháp Giza (~2560 TCN)</div>
+      <div class="key-point">• <strong>1550–1070 TCN</strong> — Vương quốc Mới: đỉnh cao đế chế, Ramesses II</div>
+      <div class="key-point">• <strong>525 TCN</strong> — Ba Tư chinh phục; <strong>332 TCN</strong> — Alexander Đại đế; <strong>30 TCN</strong> — La Mã sáp nhập</div>
+    </div>
+    <div class="notes-section">
+      <div class="notes-title">📚 Từ khóa quan trọng</div>
+      <table class="def-table">
+        <tr><th>Khái niệm</th><th>Giải thích</th></tr>
+        <tr><td>Pharaoh</td><td>Vua Ai Cập — vừa là người cai trị tuyệt đối, vừa là thần sống (con của thần Ra)</td></tr>
+        <tr><td>Kemet</td><td>"Đất đen" — tên gọi Ai Cập của người bản xứ, chỉ vùng đất màu mỡ ven sông Nile</td></tr>
+        <tr><td>Hieroglyphics</td><td>Chữ tượng hình Ai Cập, hơn 700 ký tự, xuất hiện ~3100 TCN</td></tr>
+        <tr><td>Papyrus</td><td>Vật liệu viết làm từ cây sậy — "ông tổ" của giấy hiện đại</td></tr>
+        <tr><td>Mummification</td><td>Tục ướp xác — bảo quản thể xác để linh hồn "Ka" hồi sinh sau cái chết</td></tr>
+        <tr><td>Rosetta Stone</td><td>Phiến đá phát hiện 1799, ghi 3 thứ chữ → chìa khóa giải mã Hieroglyphics (1822)</td></tr>
+        <tr><td>Vizier</td><td>Tể tướng — quan lại cao nhất giúp Pharaoh quản lý đất nước</td></tr>
+        <tr><td>Canopic jar</td><td>Bình chứa nội tạng trong lễ ướp xác — 4 bình cho 4 cơ quan chính</td></tr>
+      </table>
+    </div>
+    <div class="notes-section">
+      <div class="notes-title">🎯 Câu hỏi thường gặp trong thi cử</div>
+      <div class="key-point">1. Tại sao Herodotus gọi Ai Cập là <strong>"Món quà của sông Nile"</strong>? → Sông Nile cung cấp phù sa, nước tưới, đường giao thông → nền tảng của toàn bộ văn minh Ai Cập.</div>
+      <div class="key-point">2. Pharaoh có vai trò gì trong xã hội Ai Cập? → Vừa là vua (quyền lực tuyệt đối về chính trị, quân sự, kinh tế) vừa là thần (đại diện thần Ra, được tôn thờ).</div>
+      <div class="key-point">3. Kể tên 3 thành tựu khoa học tiêu biểu của Ai Cập cổ đại? → Lịch 365 ngày (4236 TCN), toán học (tính π ≈ 3,16, diện tích hình tròn), y học (phẫu thuật, Edwin Smith Papyrus).</div>
+      <div class="key-point">4. Rosetta Stone có ý nghĩa gì? → Giúp các nhà khoa học (Champollion, 1822) giải mã chữ Hieroglyphics sau hơn 1.400 năm bị lãng quên.</div>
+      <div class="key-point">5. Phân biệt "Vương quốc Cổ đại" và "Vương quốc Mới"? → Cổ đại (2686–2181 TCN): xây kim tự tháp, Memphis. Mới (1550–1070 TCN): đế chế mở rộng, Thebes, Abu Simbel, Ramesses II.</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ===== STARS =====
+(function(){
+  const sf=document.getElementById('hStars');
+  for(let i=0;i<40;i++){
+    const s=document.createElement('div');
+    s.className='star-dot';
+    const sz=Math.random()*2+.5;
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;animation-delay:${Math.random()*3}s;animation-duration:${1.5+Math.random()*2}s`;
+    sf.appendChild(s);
+  }
+})();
+
+// ===== TABS =====
+function switchTab(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  if(id==='quiz')startQuiz();
+  if(id==='flashcard')initFC();
+  if(id==='matching')initMatch();
+  if(id==='fillblank')initFill();
+}
+
+// ===== KNOWLEDGE EXPAND =====
+function toggleKnow(id){
+  const card=document.getElementById(id);
+  card.classList.toggle('open');
+  const btn=card.querySelector('.expand-btn');
+  btn.textContent=card.classList.contains('open')?'▲ Thu lại':'▶ Đọc thêm';
+}
+
+// ===== QUIZ =====
+const QUESTIONS=[
+  {q:"Sông Nile chảy qua bao nhiêu km?",o:["4.160 km","5.500 km","6.650 km","7.200 km"],a:2,e:"Sông Nile dài khoảng 6.650 km, là con sông dài nhất thế giới, chảy từ hồ Victoria (Uganda) ra Địa Trung Hải."},
+  {q:"Nhà thơ Hy Lạp nào gọi Ai Cập là 'Món quà của sông Nile'?",o:["Homer","Plato","Herodotus","Aristotle"],a:2,e:"Sử gia – nhà thơ Hy Lạp Herodotus (thế kỷ V TCN) đã nhận định Ai Cập là 'Món quà của sông Nile' vì sông Nile là nền tảng của toàn bộ nền văn minh."},
+  {q:"Pharaoh nào đã thống nhất Thượng và Hạ Ai Cập (khoảng 3100 TCN)?",o:["Ramesses II","Tutankhamun","Khufu","Narmer (Menes)"],a:3,e:"Pharaoh Narmer (còn gọi là Menes) đã thống nhất Thượng và Hạ Ai Cập, lập kinh đô Memphis và bắt đầu Vương triều I."},
+  {q:"Kim tự tháp Khufu (Kheops) ban đầu cao bao nhiêu mét?",o:["120 m","146,5 m","165 m","200 m"],a:1,e:"Kim tự tháp Khufu ban đầu cao 146,5 m (hiện nay còn ~138 m do mòn đỉnh). Được xây khoảng 2560 TCN với ~2,3 triệu khối đá."},
+  {q:"Chữ tượng hình Ai Cập có tên gọi là gì?",o:["Cuneiform","Demotic","Hieroglyphics","Linear A"],a:2,e:"Hieroglyphics (chữ tượng hình) là hệ thống chữ viết của người Ai Cập cổ đại, ra đời khoảng 3100 TCN với hơn 700 ký tự."},
+  {q:"Phiến đá Rosetta giúp giải mã chữ Hieroglyphics được phát hiện vào năm nào?",o:["1765","1799","1822","1850"],a:1,e:"Phiến đá Rosetta được phát hiện năm 1799 bởi quân đội Napoleon tại thành phố Rosetta (Rashid). Năm 1822, Champollion mới giải mã thành công."},
+  {q:"Người Ai Cập cổ đại đã lập ra lịch bao nhiêu ngày từ rất sớm?",o:["354 ngày","360 ngày","365 ngày","366 ngày"],a:2,e:"Người Ai Cập tạo ra lịch 365 ngày từ khoảng 4236 TCN: 12 tháng × 30 ngày + 5 ngày lễ cuối năm."},
+  {q:"Thời kỳ nào được gọi là 'Vương quốc Cổ đại' của Ai Cập?",o:["3500–3100 TCN","2686–2181 TCN","1550–1070 TCN","332–30 TCN"],a:1,e:"Vương quốc Cổ đại (Old Kingdom) kéo dài ~2686–2181 TCN là thời kỳ huy hoàng nhất của văn minh Ai Cập — xây dựng các kim tự tháp vĩ đại."},
+  {q:"Vật liệu viết chữ đặc trưng của người Ai Cập cổ đại là gì?",o:["Đất sét","Giấy papyrus","Vỏ cây birch","Da thú"],a:1,e:"Papyrus làm từ cây sậy (Cyperus papyrus) mọc ven sông Nile — nhẹ, bền, dễ cuộn lại. Là tổ tiên của giấy hiện đại."},
+  {q:"Trong tín ngưỡng Ai Cập, thần Ra cai quản điều gì?",o:["Mặt trăng","Mặt trời","Sông Nile","Cõi chết"],a:1,e:"Ra (hay Amun-Ra) là thần Mặt Trời và là vị thần tối cao trong tín ngưỡng Ai Cập. Pharaoh được coi là con trai của thần Ra."},
+  {q:"Tục ướp xác (mummification) ở Ai Cập cổ đại xuất phát từ niềm tin nào?",o:["Để phục vụ y học","Để ngăn dịch bệnh","Linh hồn Ka cần thể xác nguyên vẹn để hồi sinh","Để tưởng nhớ người đã khuất"],a:2,e:"Người Ai Cập tin rằng linh hồn 'Ka' sẽ trở về thể xác sau cái chết. Vì vậy, thể xác phải được bảo quản nguyên vẹn qua tục ướp xác kéo dài 70 ngày."},
+  {q:"Ramesses II trị vì Ai Cập trong bao nhiêu năm?",o:["27 năm","45 năm","67 năm","93 năm"],a:2,e:"Ramesses II (1279–1213 TCN) trị vì trong 67 năm, là một trong những Pharaoh cầm quyền lâu nhất. Ông cho xây đền Abu Simbel và đền Ramesseum."},
+  {q:"Edwin Smith Papyrus (~3000 TCN) là tài liệu về lĩnh vực gì?",o:["Toán học","Thiên văn học","Y học và phẫu thuật","Luật pháp"],a:2,e:"Edwin Smith Papyrus là cuốn sách giải phẫu và phẫu thuật cổ nhất thế giới (~3000 TCN), mô tả 48 trường hợp chấn thương và phương pháp điều trị."},
+  {q:"Alexander Đại đế chinh phục Ai Cập vào năm nào?",o:["525 TCN","332 TCN","30 TCN","44 TCN"],a:1,e:"Alexander Đại đế chinh phục Ai Cập năm 332 TCN, thành lập thành phố Alexandria — trung tâm học thuật lớn nhất thế giới cổ đại. Sau đó, vương triều Ptolemy cai trị Ai Cập."},
+  {q:"Công trình kiến trúc nào được xây khắc vào núi đá dưới thời Ramesses II?",o:["Kim tự tháp Giza","Đền Karnak","Đền Abu Simbel","Tượng Nhân Sư"],a:2,e:"Đền Abu Simbel do Ramesses II cho xây dựng bằng cách đục vào núi đá, nổi tiếng với 4 tượng pharaoh cao 20m ở mặt tiền. Ánh sáng mặt trời rọi thẳng vào tượng 2 lần/năm."},
+  {q:"Người Ai Cập tính được số π xấp xỉ bằng bao nhiêu?",o:["3,00","3,14","3,16","3,20"],a:2,e:"Người Ai Cập tính π ≈ 256/81 ≈ 3,16 (ghi trong Rhind Mathematical Papyrus, ~1650 TCN) — chính xác hơn giá trị 3 mà nhiều nền văn minh khác dùng."},
+  {q:"Tể tướng (Vizier) trong bộ máy nhà nước Ai Cập đảm nhiệm vai trò gì?",o:["Lãnh đạo quân đội","Quản lý kho lương","Giúp Pharaoh trị vì đất nước","Cai quản các đền thờ"],a:2,e:"Vizier (Tể tướng) là quan chức cao nhất sau Pharaoh, phụ trách quản lý toàn bộ bộ máy nhà nước: thuế khóa, tư pháp, công trình xây dựng và hành chính."},
+  {q:"Người Ai Cập cổ đại xuất khẩu mặt hàng nào là đặc trưng nhất?",o:["Đồng và thiếc","Lúa mì và giấy papyrus","Lụa và gia vị","Vũ khí và ngựa"],a:1,e:"Ai Cập xuất khẩu chủ yếu là lúa mì (đất phù sa sông Nile màu mỡ) và giấy papyrus (vật liệu viết độc đáo) sang các vùng Địa Trung Hải."},
+  {q:"Phiến đá Rosetta ghi nội dung bằng mấy loại chữ?",o:["1","2","3","4"],a:2,e:"Rosetta Stone ghi cùng một nội dung (sắc lệnh của Pharaoh Ptolemy V) bằng 3 loại chữ: Hieroglyphics (tượng hình), Demotic (bình dân) và tiếng Hy Lạp — giúp Champollion giải mã."},
+  {q:"Thành phố nào là thủ đô của Ai Cập thời Vương quốc Cổ đại?",o:["Alexandria","Thebes","Memphis","Cairo"],a:2,e:"Memphis là thủ đô của Ai Cập từ thời Pharaoh Narmer thống nhất đất nước đến cuối thời Vương quốc Cổ đại. Thebes trở thành thủ đô trong Vương quốc Trung và Mới."},
+];
+
+let qCur=0,qScoreVal=0,answered=false;
+function startQuiz(){
+  qCur=0;qScoreVal=0;answered=false;
+  document.getElementById('quizArea').style.display='block';
+  document.getElementById('quizEnd').style.display='none';
+  loadQ();
+}
+function loadQ(){
+  if(qCur>=QUESTIONS.length){endQuiz();return;}
+  answered=false;
+  const q=QUESTIONS[qCur];
+  document.getElementById('qProg').style.width=((qCur+1)/QUESTIONS.length*100)+'%';
+  document.getElementById('qLabel').textContent=`Câu ${qCur+1} / ${QUESTIONS.length}`;
+  document.getElementById('qScore').textContent=qScoreVal;
+  document.getElementById('qNum').textContent=`CÂU HỎI ${qCur+1}`;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('qExp').className='quiz-explain';
+  document.getElementById('qExp').textContent='';
+  document.getElementById('qNextBtn').style.display='none';
+  document.getElementById('qResultBadge').textContent='';
+  const oc=document.getElementById('qOpts');
+  oc.innerHTML='';
+  q.o.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='quiz-opt';
+    b.textContent=String.fromCharCode(65+i)+'. '+o;
+    b.onclick=()=>selectA(i,b);
+    oc.appendChild(b);
+  });
+}
+function selectA(i,btn){
+  if(answered)return;
+  answered=true;
+  const q=QUESTIONS[qCur];
+  document.querySelectorAll('.quiz-opt').forEach((b,idx)=>{
+    b.disabled=true;
+    if(idx===q.a)b.classList.add('correct');
+  });
+  const expEl=document.getElementById('qExp');
+  expEl.textContent='💡 '+q.e;
+  expEl.classList.add('show');
+  const rb=document.getElementById('qResultBadge');
+  if(i===q.a){qScoreVal++;btn.classList.add('correct');rb.textContent='✅ Đúng!';rb.style.color='#22c55e';}
+  else{btn.classList.add('wrong');rb.textContent='❌ Chưa đúng';rb.style.color='#ef4444';}
+  document.getElementById('qScore').textContent=qScoreVal;
+  document.getElementById('qNextBtn').style.display='inline-block';
+  qCur++;
+}
+function nextQ(){
+  if(qCur>=QUESTIONS.length){endQuiz();}else{loadQ();}
+}
+function endQuiz(){
+  document.getElementById('quizArea').style.display='none';
+  document.getElementById('quizEnd').style.display='block';
+  const pct=Math.round(qScoreVal/QUESTIONS.length*100);
+  document.getElementById('finalScore').textContent=qScoreVal;
+  document.getElementById('finalTot').textContent='/'+QUESTIONS.length;
+  let msg,sub;
+  if(pct>=90){msg='🌟 Xuất sắc!';sub='Bạn nắm vững kiến thức Văn minh Ai Cập. Hãy chuẩn bị Bài 5 nhé!';}
+  else if(pct>=70){msg='👍 Khá tốt!';sub='Ôn lại phần bạn còn sai, tập trung vào niên đại và thành tựu khoa học.';}
+  else if(pct>=50){msg='📚 Cần cố gắng thêm';sub='Xem lại phần Kiến thức và Ghi nhớ, rồi làm lại bài kiểm tra.';}
+  else{msg='💪 Hãy ôn lại từ đầu';sub='Bắt đầu từ tab Kiến thức → Niên đại → Flashcard trước khi làm quiz.';}
+  document.getElementById('scoreMsg').textContent=msg;
+  document.getElementById('scoreSub').textContent=sub;
+}
+
+// ===== FLASHCARD =====
+const FLASHCARDS=[
+  {q:"Ai Cập nằm ở đâu trên bản đồ thế giới?",a:"Đông bắc châu Phi, dọc theo hạ lưu sông Nile. Phía bắc giáp Địa Trung Hải, đông giáp Biển Đỏ, tây và nam giáp sa mạc."},
+  {q:"'Kemet' và 'Deshret' có nghĩa là gì?",a:"Kemet = 'đất đen' (đất phù sa màu mỡ ven sông Nile). Deshret = 'đất đỏ' (sa mạc hoang vu hai bên). Đây là tên gọi của người Ai Cập về quê hương họ."},
+  {q:"Pharaoh Narmer có vai trò lịch sử gì?",a:"Pharaoh Narmer (Menes) thống nhất Thượng và Hạ Ai Cập khoảng 3100 TCN, lập thủ đô Memphis, bắt đầu Vương triều I và mở ra 3.000 năm văn minh."},
+  {q:"Kể tên 3 công trình kiến trúc vĩ đại nhất Ai Cập cổ đại?",a:"① Kim tự tháp Khufu ở Giza (146,5m, ~2560 TCN)\n② Tượng Nhân Sư (cao 20m, dài 73m)\n③ Đền Karnak (phức hợp tôn giáo lớn nhất thế giới, 1,5 km²)"},
+  {q:"Giấy papyrus là gì? Tầm quan trọng của nó?",a:"Papyrus làm từ cây sậy Cyperus papyrus ven sông Nile — nhẹ, bền, dễ cuộn, cho phép lưu giữ văn bản. Là vật liệu viết cách mạng và là 'ông tổ' của giấy hiện đại."},
+  {q:"Phiến đá Rosetta là gì? Ai giải mã nó?",a:"Phiến đá Rosetta (1799) ghi cùng 1 nội dung bằng 3 thứ chữ: Hieroglyphics, Demotic và Hy Lạp. Jean-François Champollion (người Pháp) giải mã thành công năm 1822."},
+  {q:"Người Ai Cập cổ đại có những thành tựu gì về thiên văn?",a:"• Lịch 365 ngày từ 4236 TCN (sớm nhất thế giới)\n• Theo dõi Sao Thiên Lang (Sirius) báo mùa lũ\n• Đồng hồ nước (clepsydra) đo thời gian ban đêm\n• Đồng hồ mặt trời (sundial) ban ngày"},
+  {q:"Tục ướp xác (mummification) diễn ra như thế nào?",a:"Kéo dài 70 ngày: lấy não qua lỗ mũi, nội tạng đặt trong 4 bình Canopic, tẩm muối natron 40 ngày cho khô, bọc vải lanh 15 ngày. Niềm tin: linh hồn Ka cần thể xác để hồi sinh."},
+  {q:"Các thần quan trọng nhất trong tín ngưỡng Ai Cập là ai?",a:"• Ra/Amun-Ra: thần Mặt Trời, tối cao nhất\n• Osiris: thần cõi chết và phục sinh\n• Isis: thần phép thuật và bảo hộ gia đình\n• Horus: thần bầu trời (đầu chim ưng)\n• Anubis: thần ướp xác (đầu chó sói)"},
+  {q:"Vương quốc Mới (1550–1070 TCN) có những đặc điểm gì?",a:"• Thời kỳ đế chế: lãnh thổ mở rộng đến Syria, Nubia\n• Pharaoh Ramesses II trị vì 67 năm, xây đền Abu Simbel\n• Pharaoh Tutankhamun (lăng mộ nguyên vẹn, phát hiện 1922)\n• Thủ đô Thebes (Luxor ngày nay)"},
+  {q:"Người Ai Cập có những thành tựu y học nào?",a:"• Edwin Smith Papyrus (~3000 TCN): sách giải phẫu cổ nhất thế giới, 48 ca phẫu thuật\n• Ebers Papyrus (~1550 TCN): 700 bài thuốc\n• Biết điều trị: vết thương, gãy xương, răng miệng\n• Hiểu giải phẫu nhờ tục ướp xác"},
+  {q:"Ai Cập cổ đại chấm dứt như thế nào?",a:"• 525 TCN: Ba Tư chinh phục\n• 332 TCN: Alexander Đại đế, lập Alexandria\n• 30 TCN: Cleopatra VII tự tử, La Mã sáp nhập\n• Thế kỷ IV: Kitô giáo thay thế đa thần giáo → Văn minh Ai Cập cổ đại chính thức kết thúc"},
+];
+let fcIdx=0,fcDone=new Set();
+function initFC(){fcIdx=0;fcDone.clear();renderFC();}
+function renderFC(){
+  const card=document.getElementById('theCard');
+  card.classList.remove('flipped');
+  const fc=FLASHCARDS[fcIdx];
+  document.getElementById('fcFront').textContent=fc.q;
+  document.getElementById('fcBack').textContent=fc.a;
+  document.getElementById('fcCounter').textContent=`Thẻ ${fcIdx+1} / ${FLASHCARDS.length} · Nhấn thẻ để lật`;
+  const dots=document.getElementById('fcDots');
+  dots.innerHTML='';
+  FLASHCARDS.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='fc-dot'+(fcDone.has(i)?' done':'')+(i===fcIdx?' current':'');
+    dots.appendChild(d);
+  });
+}
+function flipCard(){
+  const card=document.getElementById('theCard');
+  card.classList.toggle('flipped');
+  if(card.classList.contains('flipped'))fcDone.add(fcIdx);
+  renderFC();card.classList.toggle('flipped',document.getElementById('theCard').classList.contains('flipped'));
+}
+function nextCard(){fcIdx=(fcIdx+1)%FLASHCARDS.length;fcDone.add(fcIdx-1<0?FLASHCARDS.length-1:fcIdx-1);renderFC();}
+function prevCard(){fcIdx=(fcIdx-1+FLASHCARDS.length)%FLASHCARDS.length;renderFC();}
+
+// ===== MATCHING =====
+const MATCH_DATA=[
+  {l:"Pharaoh",r:"Vua kiêm thần sống, con thần Ra"},
+  {l:"Hieroglyphics",r:"Chữ tượng hình Ai Cập, 700+ ký tự"},
+  {l:"Papyrus",r:"Vật liệu viết từ cây sậy ven sông Nile"},
+  {l:"Mummification",r:"Tục ướp xác để linh hồn Ka hồi sinh"},
+  {l:"Rosetta Stone",r:"Phiến đá 3 thứ chữ, giải mã 1822"},
+  {l:"Vizier",r:"Tể tướng, quan chức cao nhất sau Pharaoh"},
+  {l:"Kemet",r:"Tên gốc của Ai Cập, nghĩa là 'đất đen'"},
+  {l:"Herodotus",r:"Học giả Hy Lạp gọi Ai Cập là 'Món quà của sông Nile'"},
+];
+let selLeft=null,selRight=null,matchedCount=0;
+function initMatch(){
+  matchedCount=0;selLeft=null;selRight=null;
+  const shuffled=[...MATCH_DATA].sort(()=>Math.random()-.5);
+  const rights=[...MATCH_DATA].map(d=>d.r).sort(()=>Math.random()-.5);
+  const lEl=document.getElementById('matchLeft'),rEl=document.getElementById('matchRight');
+  lEl.innerHTML='';rEl.innerHTML='';
+  document.getElementById('matchScore').textContent='';
+  shuffled.forEach((d,i)=>{
+    const b=document.createElement('div');
+    b.className='match-item match-left';
+    b.textContent=d.l;
+    b.dataset.val=d.l;
+    b.onclick=()=>clickLeft(b);
+    lEl.appendChild(b);
+  });
+  rights.forEach(r=>{
+    const b=document.createElement('div');
+    b.className='match-item match-right';
+    b.textContent=r;
+    b.dataset.val=r;
+    b.onclick=()=>clickRight(b);
+    rEl.appendChild(b);
+  });
+}
+function clickLeft(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('.match-left').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');selLeft=el;
+  if(selRight)checkMatch();
+}
+function clickRight(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('.match-right').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');selRight=el;
+  if(selLeft)checkMatch();
+}
+function checkMatch(){
+  const pair=MATCH_DATA.find(d=>d.l===selLeft.dataset.val);
+  if(pair&&pair.r===selRight.dataset.val){
+    selLeft.classList.add('matched');selLeft.classList.remove('selected');
+    selRight.classList.add('matched');selRight.classList.remove('selected');
+    matchedCount++;
+    document.getElementById('matchScore').textContent=`✅ Đúng! Đã nối ${matchedCount}/${MATCH_DATA.length} cặp`+(matchedCount===MATCH_DATA.length?' 🎉 Hoàn thành!':'');
+  } else {
+    selLeft.classList.add('wrong-flash');selRight.classList.add('wrong-flash');
+    setTimeout(()=>{
+      selLeft.classList.remove('wrong-flash','selected');
+      selRight.classList.remove('wrong-flash','selected');
+    },500);
+  }
+  selLeft=null;selRight=null;
+}
+
+// ===== FILL BLANK =====
+const FILL_DATA=[
+  {text:"Sông Nile dài khoảng [___] km và được coi là nguồn sống của văn minh Ai Cập.",blanks:["6650"],hints:["Đây là con số dài nhất thế giới"]},
+  {text:"Pharaoh [___] đã thống nhất Thượng và Hạ Ai Cập vào khoảng 3100 TCN.",blanks:["Narmer"],hints:["Còn gọi là Menes, người lập kinh đô Memphis"]},
+  {text:"Chữ tượng hình của người Ai Cập cổ đại gọi là [___].",blanks:["Hieroglyphics"],hints:["Từ tiếng Hy Lạp, nghĩa là 'chữ khắc thần thánh'"]},
+  {text:"Người Ai Cập tính số π xấp xỉ bằng [___], ghi trong Rhind Papyrus.",blanks:["3.16"],hints:["= 256/81, gần với 3,14159..."]},
+  {text:"Phiến đá [___] (1799) giúp Champollion giải mã chữ Hieroglyphics năm 1822.",blanks:["Rosetta"],hints:["Tên thành phố ở Ai Cập nơi tìm thấy phiến đá"]},
+  {text:"Lịch [___] ngày của người Ai Cập cổ đại xuất hiện từ khoảng 4236 TCN.",blanks:["365"],hints:["Số ngày trong năm, bằng lịch hiện đại chúng ta dùng"]},
+  {text:"Vương quốc [___] (2686–2181 TCN) là thời kỳ xây dựng Kim tự tháp Giza.",blanks:["Cổ đại"],hints:["Còn gọi là Old Kingdom – Thời đại các Pharaoh hùng mạnh nhất"]},
+  {text:"Herodotus gọi Ai Cập là '[___] của sông Nile' vì sông Nile là nền tảng của toàn bộ văn minh.",blanks:["Món quà"],hints:["2 từ, câu nói nổi tiếng của nhà sử học Hy Lạp"]},
+];
+
+function initFill(){
+  const container=document.getElementById('fillCards');
+  container.innerHTML='';
+  document.getElementById('fillResult').textContent='';
+  FILL_DATA.forEach((item,fi)=>{
+    const div=document.createElement('div');
+    div.className='fill-card';
+    let html='<div class="fill-text">';
+    let bCount=0;
+    let txt=item.text;
+    txt=txt.replace(/\[___\]/g,()=>{
+      const id=`fill_${fi}_${bCount++}`;
+      return `<input class="fill-input" id="${id}" data-ans="${item.blanks[bCount-1]}" placeholder="...">`;
+    });
+    html+=txt+'</div>';
+    item.blanks.forEach((_,bi)=>{
+      html+=`<div class="fill-hint" id="hint_${fi}_${bi}">💡 Gợi ý: ${item.hints[bi]}</div>`;
+    });
+    div.innerHTML=html;
+    container.appendChild(div);
+  });
+}
+function checkFill(){
+  let correct=0,total=0;
+  document.querySelectorAll('.fill-input').forEach(inp=>{
+    const ans=inp.dataset.ans.toLowerCase().trim();
+    const val=inp.value.toLowerCase().trim();
+    total++;
+    const id=inp.id;
+    const parts=id.split('_');
+    const fi=parts[1],bi=parts[2];
+    const hint=document.getElementById(`hint_${fi}_${bi}`);
+    if(val===ans||val.replace(/,/,'.')===ans.replace(/,/,'.')){
+      inp.classList.remove('wrong');inp.classList.add('correct');
+      if(hint){hint.className='fill-hint ok';hint.textContent='✅ Đúng!';}
+      correct++;
+    } else {
+      inp.classList.remove('correct');inp.classList.add('wrong');
+      if(hint){hint.className='fill-hint show';} 
+    }
+  });
+  const pct=Math.round(correct/total*100);
+  document.getElementById('fillResult').textContent=`Kết quả: ${correct}/${total} câu đúng (${pct}%) ${pct>=80?'🌟 Xuất sắc!':pct>=60?'👍 Khá tốt!':'📚 Ôn thêm nhé!'}`;
+}
+function resetFill(){initFill();}
+
+// init
+startQuiz();
+initFC();
+</script>
+</body>
+</html>
